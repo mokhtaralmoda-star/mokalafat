@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: sejel-server
+    name: mokalafat-server
     env: node
     region: frankfurt
     plan: free
