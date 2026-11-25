@@ -1406,7 +1406,7 @@ if (form) {
       if (acc.querySelector('.obj-label')) return;
       var id = (acc.id || '').replace('accTicket', '');
       if (!id) return;
-      var body = acc.querySelector('.card-body') || acc;
+      var body = acc.querySelector('.card') || acc;
       var wrap = document.createElement('div');
       wrap.className = 'obj-label';
       wrap.style.cssText = 'margin-top:12px;text-align:left;';
@@ -1418,6 +1418,7 @@ if (form) {
     });
   }
 
+  document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('#responseInfo .accordion')) { setTimeout(addLabels, 0); setTimeout(addLabels, 300); } });
   var origShow = window.showTicketsV2;
   if (typeof origShow === 'function') {
     window.showTicketsV2 = function () {
