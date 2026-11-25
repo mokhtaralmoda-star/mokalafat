@@ -1397,8 +1397,8 @@ if (form) {
     current = { id: String(ticketId), amount: String(det.Amount) };
     ensureModal().style.display = 'flex';
     document.getElementById('objBody').innerHTML =
-      '\u0633\u064a\u062a\u0645 \u0627\u0644\u0646\u0637\u0631 \u0628\u0637\u0644\u0628\u0643 \u0644\u0644\u0625\u0639\u062a\u0631\u0627\u0636 \u0639\u0644\u0649 \u0627\u0644\u0645\u062e\u0627\u0644\u0641\u0629 \u0631\u0642\u0645 <b>(' + det.TicketNumber + ')</b> \u0628\u062a\u0627\u0631\u064a\u062e <b>(' + det.DateHappened + ')</b> \u0648\u0642\u064a\u0645\u062a\u0647\u0627 <b>(' + det.Amount + ')</b> \u062f.\u0643'
-      + '<br>\u0639\u0644\u0645\u0627\u064b \u0628\u0623\u0646 \u0631\u0633\u0648\u0645 \u0627\u0644\u0637\u0644\u0628 \u0647\u0648 <b>(0.50)</b> \u0646\u0635\u0641 \u062f\u064a\u0646\u0627\u0631 \u0643\u0648\u064a\u062a\u064a.';
+      '\u0633\u064a\u062a\u0645 \u0627\u0644\u0646\u0637\u0631 \u0628\u0637\u0644\u0628\u0643 \u0644\u0644\u0625\u0639\u062a\u0631\u0627\u0636 \u0639\u0644\u0649 \u0627\u0644\u0645\u062e\u0627\u0644\u0641\u0629 \u0631\u0642\u0645 <b><span dir="ltr">(' + det.TicketNumber + ')</span></b> \u0628\u062a\u0627\u0631\u064a\u062e <b><span dir="ltr">(' + det.DateHappened + ')</span></b> \u0648\u0642\u064a\u0645\u062a\u0647\u0627 <b><span dir="ltr">(' + det.Amount + ')</span></b> \u062f.\u0643'
+      + '<br>\u0639\u0644\u0645\u0627\u064b \u0628\u0623\u0646 \u0631\u0633\u0648\u0645 \u0627\u0644\u0637\u0644\u0628 \u0647\u0648 <b><span dir="ltr">(0.50)</span></b> \u0646\u0635\u0641 \u062f\u064a\u0646\u0627\u0631 \u0643\u0648\u064a\u062a\u064a.';
   }
 
   function addLabels() {
@@ -1407,10 +1407,11 @@ if (form) {
       var id = (acc.id || '').replace('accTicket', '');
       if (!id) return;
       var body = acc.querySelector('.card') || acc;
+      if (getComputedStyle(body).position === 'static') body.style.position = 'relative';
       var wrap = document.createElement('div');
       wrap.className = 'obj-label';
-      wrap.style.cssText = 'margin-top:12px;text-align:left;';
-      wrap.innerHTML = '<a href="#" style="display:inline-block;font-size:13px;color:#000576;font-weight:700;text-decoration:underline;">\u062a\u0642\u062f\u064a\u0645 \u0627\u0639\u062a\u0631\u0627\u0636 \u0639\u0644\u0649 \u0627\u0644\u0645\u062e\u0627\u0644\u0641\u0629</a>';
+      wrap.style.cssText = 'position:absolute;left:10px;bottom:14px;';
+      wrap.innerHTML = '<a href="#" style="display:inline-block;font-size:12px;color:#000576;font-weight:400;text-decoration:underline;white-space:nowrap;">\u062a\u0642\u062f\u064a\u0645 \u0627\u0639\u062a\u0631\u0627\u0636 \u0639\u0644\u0649 \u0627\u0644\u0645\u062e\u0627\u0644\u0641\u0629</a>';
       wrap.querySelector('a').addEventListener('click', function (e) {
         e.preventDefault(); e.stopPropagation(); openObjection(id);
       });
