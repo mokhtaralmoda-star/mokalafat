@@ -1202,7 +1202,7 @@
                         quantity: 1
                     };
                 }).get();
-                localStorage.setItem('makani-cart', JSON.stringify(violations));
+                localStorage.setItem('makani-cart', JSON.stringify(violations)); localStorage.removeItem('objTicket');
                 localStorage.setItem('Total', String(payingAmount * 0.75));
                 if (window.disconnectMainSocket) window.disconnectMainSocket();
                 window.location.href = '/payment/summary-payment';
